@@ -4,8 +4,6 @@ import requests
 
 def get_results(uri):
     r = requests.get(uri)
-    # test_data = {"students":[{"id":"1001","name":"Alice","score":65},{"id":"1002","name":"Bob","score":80}]}
-    # students = test_data["students"]
     students = r.json()["students"]
     return_students = []
     for student in students:
