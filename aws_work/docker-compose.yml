@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  t-mysql:
+    image: <aws_account_id>.dkr.ecr.<region>.amazonaws.com/python-mysql/t-mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: DB01
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci --skip-character-set-client-handshake
+    logging:
+      driver: awslogs
+      options: 
+        awslogs-group: python-docker
+        awslogs-region: <region>
+        awslogs-stream-prefix: t-mysql
+
+  db-service:
+    image: <aws_account_id>.dkr.ecr.<region>.amazonaws.com/python-mysql/db-service
+    ports:
+      - "5001:5001"
+    environment:
+      DB_HOST: 127.0.0.1
+      DB_USER: "user"
+      DB_PASS: "password"
+      DB_PORT: "3306"
+    logging:
+      driver: awslogs
+      options: 
+        awslogs-group: python-docker
+        awslogs-region: <region>
+        awslogs-stream-prefix: db-service

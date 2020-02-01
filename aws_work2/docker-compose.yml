@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  apl-service:
+    image: <aws_account_id>.dkr.ecr.<region>.amazonaws.com/python-mysql/apl-service
+    ports:
+      - "5002:5002"
+    environment:
+      BACKEND_HOST: "backend.sample"
+      BACKEND_PORT: "5001"
+    tty: true
+    logging:
+      driver: awslogs
+      options: 
+        awslogs-group: python-docker
+        awslogs-region: <region>
+        awslogs-stream-prefix: apl-service
+
